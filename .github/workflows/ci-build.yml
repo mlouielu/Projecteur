@@ -21,6 +21,8 @@ jobs:
     - uses: actions/checkout@v1
     - name: Run a one-line script
       run: echo Hello, world! ${DOCKER_IMG}
+    - name: Login to github docker registry
+      run: docker login docker.pkg.github.com -u jahnf -p ${{ secrets.GITHUB_TOKEN }}
     - name: Test
       run: ls -alh && pwd
     - name: git-describe
