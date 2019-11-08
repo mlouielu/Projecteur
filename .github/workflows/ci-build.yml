@@ -32,8 +32,8 @@ jobs:
     - name: Pull ${{ matrix.docker_tag }} docker image
       run: docker pull ${DOCKER_IMG}:${{ matrix.docker_tag }}
     - name: docker create build container
-      run: docker run --name build -d -v `pwd`:/source:ro -ti ${DOCKER_IMG}:${{ matrix.docker_tag }}
+      run: docker run --name build -d -v `pwd`:/source:ro -t ${DOCKER_IMG}:${{ matrix.docker_tag }}
     - name: cmake configuration
-      run: docker exec -it build /bin/bash -c "mkdir -p /build/dist-pkg && cd /build && cmake /source"
+      run: docker exec build /bin/bash -c "mkdir -p /build/dist-pkg && cd /build && cmake /source"
     - name: cmake build
-      run: docker exec -it build /bin/bash -c "cd /build && cmake --build ."  
+      run: docker exec build /bin/bash -c "cd /build && cmake --build ."  
