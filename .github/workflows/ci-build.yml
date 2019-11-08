@@ -23,6 +23,8 @@ jobs:
       run: echo Hello, world! ${DOCKER_IMG}
     - name: Test
       run: ls -alh && pwd
+    - name: git-describe
+      run: git describe
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
