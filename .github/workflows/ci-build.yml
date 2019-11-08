@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     strategy:
       matrix:
         docker_tag: 
@@ -36,4 +35,8 @@ jobs:
     - name: cmake configuration
       run: docker exec build /bin/bash -c "mkdir -p /build/dist-pkg && cd /build && cmake /source"
     - name: cmake build
-      run: docker exec build /bin/bash -c "cd /build && cmake --build ."  
+      run: docker exec build /bin/bash -c "cd /build && cmake --build ."
+    - name: create linux package
+      run: docker exec build /bin/bash -c "cd /build && cmake --build . --target dist-package"
+    - name: Run projecteur executable, print version
+      run: docker exec build /bin/bash -c "cd /build && ./projecteur --version"
