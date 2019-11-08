@@ -7,12 +7,12 @@ jobs:
 
     strategy:
       matrix:
-        env: 
+        docker_img: 
         - archlinux
         - fedora-31
         - fedora-30
         - debian-stretch
-        - devian-buster
+        - debian-buster
         - ubuntu-18.04
         - ubuntu-19.10
         - opensuse-15.0
@@ -22,13 +22,13 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     env: 
-      DOCKER_IMG: ${{ matrix.env }}
+      DOCKER_IMG: docker.pkg.github.com/jahnf/projecteur/projecteur:${{ docker_img.env }}
 
     steps:
     - uses: actions/checkout@v1
     - name: Login to github docker registry
       run: docker login docker.pkg.github.com -u jahnf -p ${{ secrets.GITHUB_TOKEN }}
     - name: Pull ${{ matrix.env }} docker image
-      run: docker pull docker.pkg.github.com/jahnf/projecteur/projecteur:${DOCKER_IMG}
-    - name: git-describe
-      run: git describe
+      run: docker pull docker.pkg.github.com/jahnf/projecteur/projecteur:${{ docker_img.env }}
+    - name: docker create build container
+      run: docker run --name build -d -v `pwd`:/source:ro -ti ${DOCKER_IMG}
