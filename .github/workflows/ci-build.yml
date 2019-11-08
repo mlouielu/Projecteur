@@ -44,11 +44,11 @@ jobs:
       run: docker cp build:/build/dist-pkg .
     
     - name: Move source package
-      if:  matrix.docker_tag == archlinux
+      if:  startsWith(matrix.docker_tag, 'archlinux')
       run: mkdir -p source-pkg && mv dist-pkg/*source.tar.gz ./source-pkg || true
     
     - name: Upload source-pkg
-      if:  matrix.docker_tag == archlinux
+      if:  startsWith(matrix.docker_tag, 'archlinux')
       uses: actions/upload-artifact@v1
       with:
         name: source-package
