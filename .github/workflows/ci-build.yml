@@ -7,13 +7,15 @@ jobs:
 
     strategy:
       matrix:
+        env: 
+        - archlinux
+        - fedora-31
         os: 
         - ubuntu-18.04
-        env:
-        - DOCKER_IMG: archlinux
-        - DOCKER_IMG: fedora-31
 
     runs-on: ${{ matrix.os }}
+    env: 
+      DOCKER_IMG: ${{ matrix.env }}
 
     steps:
     - uses: actions/checkout@v1
