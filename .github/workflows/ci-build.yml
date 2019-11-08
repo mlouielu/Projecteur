@@ -40,3 +40,11 @@ jobs:
       run: docker exec build /bin/bash -c "cd /build && cmake --build . --target dist-package"
     - name: Run projecteur executable, print version
       run: docker exec build /bin/bash -c "cd /build && ./projecteur --version"
+    - name: Get created artifacts from docker container
+      run: docker cp build:/build/dist-pkg .
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ matrix.docker_tag }}-package
+        path: dist-pkg
+
