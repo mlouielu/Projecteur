@@ -10,8 +10,8 @@ jobs:
         os: 
         - ubuntu-18.04
         env:
-        - DOCKER_IMG=archlinux
-        - DOCKER_IMG=fedora-31
+        - DOCKER_IMG: archlinux
+        - DOCKER_IMG: fedora-31
 
     runs-on: ${{ matrix.os }}
 
