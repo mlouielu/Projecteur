@@ -5,16 +5,20 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        docker_img: [ archlinux ]
+        os: 
+        - ubuntu-18.04
+        env:
+        - DOCKER_IMG=archlinux
+        - DOCKER_IMG=fedora-31
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v1
     - name: Run a one-line script
-      run: echo Hello, world! ${{ docker_img }}
+      run: echo Hello, world! ${DOCKER_IMG}
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
