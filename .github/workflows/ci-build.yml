@@ -10,8 +10,15 @@ jobs:
         env: 
         - archlinux
         - fedora-31
-        os: 
+        - fedora-30
+        - debian-stretch
+        - devian-buster
         - ubuntu-18.04
+        - ubuntu-19.10
+        - opensuse-15.0
+        - opensuse-15.1
+        os: 
+        - ubuntu-latest
 
     runs-on: ${{ matrix.os }}
     env: 
@@ -19,15 +26,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world! ${DOCKER_IMG}
     - name: Login to github docker registry
       run: docker login docker.pkg.github.com -u jahnf -p ${{ secrets.GITHUB_TOKEN }}
-    - name: Test
-      run: ls -alh && pwd
+    - name: Pull ${{ matrix.env }} docker image
+      run: docker pull docker.pkg.github.com/jahnf/projecteur/projecteur:${DOCKER_IMG}
     - name: git-describe
       run: git describe
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
